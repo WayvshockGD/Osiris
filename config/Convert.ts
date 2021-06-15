@@ -5,7 +5,7 @@ export interface config {
     token: string;
 }
 
-let file = readFileSync("./config/files/production.yaml", { encoding: "utf8" });
+let file = readFileSync("./production.yaml", { encoding: "utf8" });
 
 export function Config(): config {
     let parsed = parse(file);
