@@ -9,17 +9,6 @@ export default class RoleUtil {
         return gotRole1.position > gotRole2.position;
     }
 
-    sort(roles: string[], guild: Eris.Guild) {
-        let roleArray = [];
-
-        for (let r of roles) {
-            let rol = this.getRole(guild, r);
-            roleArray.push(rol);
-        }
-
-        roleArray.sort((a, b) => b?.position || 0 - a?.position || 0) || [];
-    }
-
     private getRole(guild: Eris.Guild, id: string) {
         return guild.roles.get(id);
     }

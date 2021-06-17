@@ -1,4 +1,6 @@
 import Eris from "eris";
+import Responses, { DataObject } from "../database/Responses";
+import { HelpManager } from "../managers/HelpManager";
 import Osiris from "../Osiris";
 
 interface opts {
@@ -7,7 +9,7 @@ interface opts {
 }
 
 export default class CommandHandler {
-    constructor(message: Eris.Message, options: opts) {
+    async start(message: Eris.Message, options: opts) {
         let { client, rest } = options;
 
         let { prefix } = client._config;
@@ -18,15 +20,47 @@ export default class CommandHandler {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/);
 
+        if (["help", "commands"].includes(args[0])) {
+            args = args.slice(1);
+            return new HelpManager(args, message, client.commands, client.modules);
+        }
+
         let command = client.commands.get(args[0].toLowerCase());
 
         if (!command) return;
+        let subCommand;
+
+        if (args[1]) {
+            subCommand = client.subCommands.get(args[1].toLowerCase());
+        }
+
+        args = args.slice(1);
+
+        let guild = (<Eris.GuildChannel>message.channel).guild;
+
+        let responses: DataObject = await Responses.findOne({ Guild: guild.id })
+                                  || client.defaultResponses;
+
+        if (subCommand) {
+            args = args.slice(1);
+            subCommand.execute({
+                client,
+                rest,
+                args,
+                message,
+                guild: guild,
+                responses: responses
+            });
+            return;
+        }
 
         command.execute({
             client,
             rest,
             args,
-            message
+            message,
+            guild: (<Eris.GuildChannel>message.channel).guild,
+            responses: responses
         })
     }
 }

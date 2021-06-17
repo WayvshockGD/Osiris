@@ -1,11 +1,7 @@
-import { Resolver } from "../../utils/Resolver";
 import Eris from "eris";
 import { CommandOptions } from "../../interfaces/CommandContext";
-import RoleUtil from "../../utils/RoleUtil";
 import { Command } from "./Command";
-
-let roleUtil = new RoleUtil();
-let resolver = new Resolver();
+import Parser from "../../utils/Parser";
 
 export class ModerationCommand extends Command {
     constructor(opts: CommandOptions) {
@@ -14,17 +10,23 @@ export class ModerationCommand extends Command {
 
     public ban(
         message: Eris.Message,
-        member: Eris.Member, 
-        args: string[], 
-        guild: Eris.Guild
+        member: Eris.Member,
+        reason: string,
+        response: string
     ) {
-        let userMember = resolver.member(args[0], guild);
+        let parser = new Parser(response);
 
-        let user = message.member;
+        member.ban(0, reason)
+            .then(() => {
 
-        let role = roleUtil.sort(userMember?.roles || [], guild);
-        let userRole = roleUtil.sort(user?.roles || [], guild);
+            message.channel.createMessage(
+                parser.start(message.author.username, member)
+            );
 
-        let sorted = roleUtil.compare(role, userRole, guild);
+        }).catch((err: Eris.DiscordRESTError) => {
+                return message.channel.createMessage(
+                    `Cannot ban **${member.username}**: ${err.message}`
+                );
+        })
     }
 }

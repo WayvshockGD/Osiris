@@ -19,6 +19,8 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "eris": "^0.15.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.14",
     "yaml": "^1.10.2"
   }
 }

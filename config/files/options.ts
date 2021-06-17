@@ -6,7 +6,7 @@ let options: Eris.ClientOptions = {
     defaultImageFormat: "jpeg",
     allowedMentions: {
         everyone: false,
-        roles: true,
+        roles: false,
         repliedUser: true,
         users: true
     },

@@ -2,7 +2,8 @@ import Eris from "eris";
 import { config, Config } from "../config/Convert";
 import Loader from "./core/Loader";
 import CommandHandler from "./handlers/CommandHandler";
-import { CommandOptions } from "./interfaces/CommandContext";
+import { CommandOptions, subCommandOptions } from "./interfaces/CommandContext";
+import { ModuleOptions } from "./interfaces/ModuleContext";
 import StatusManager from "./managers/StatusManager";
 import Logger from "./utils/Logger";
 
@@ -18,6 +19,10 @@ export default class Osiris extends Eris.Client {
 
     commands: Map<string, CommandOptions>;
 
+    modules: Map<string, ModuleOptions>;
+
+    subCommands: Map<string, subCommandOptions>;
+
     constructor(options: Eris.ClientOptions) {
         super(convert.token, options);
 
@@ -27,17 +32,25 @@ export default class Osiris extends Eris.Client {
 
         this.commands = new Map();
 
+        this.modules = new Map();
+
+        this.subCommands = new Map();
+
         this._config = convert;
 
         this.connect();
         this.startLoading();
         this.on("ready", this.onStartUp.bind(this));
-        this.on("messageCreate", (message: Eris.Message) => {
-            new CommandHandler(message, {
+        this.on("messageCreate", async (message: Eris.Message) => {
+            await new CommandHandler().start(message, {
                 client: this,
                 rest: this._rest
             })
         })
+    }
+
+    get defaultResponses() {
+        return this._config.defaultResponses;
     }
 
     public onStartUp() { 
@@ -54,7 +67,9 @@ export default class Osiris extends Eris.Client {
 
     private startLoading() {
         new Loader(
-            this.commands
+            this.commands,
+            this.modules,
+            this.subCommands
         );
     }
 

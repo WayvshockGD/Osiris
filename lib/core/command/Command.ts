@@ -1,4 +1,4 @@
-import { CommandOptions, executeOpts } from "../../interfaces/CommandContext";
+import { CommandOptions, executeOpts, subCommandBuilder } from "../../interfaces/CommandContext";
 
 export class Command {
 
@@ -10,6 +10,12 @@ export class Command {
 
     public description: string;
 
+    public category: string;
+
+    public subCommands?: subCommandBuilder[];
+
+    public additions: CommandOptions["additions"];
+
     constructor(opts: CommandOptions) {
 
         this.name = opts.name;
@@ -17,6 +23,12 @@ export class Command {
         this.description = opts.description;
 
         this.enabled = opts.enabled;
+
+        this.category = opts.category;
+
+        this.additions = opts.additions;
+
+        this.subCommands = opts.subCommands;
 
         this.execute = opts.execute;
     }
