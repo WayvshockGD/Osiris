@@ -1,4 +1,7 @@
 import Eris from "eris";
+import { Config } from "../../config/Convert";
+
+let config = Config();
 
 interface Rules {
     value: string;
@@ -13,7 +16,7 @@ export default class Parser {
         this.args = args;
     }
 
-    public start(mention: string, member: Eris.Member) {
+    public start(mention: string, member: Eris.Member, guild: Eris.Guild) {
 
         let rules: Rules[] = [
             {
@@ -23,6 +26,18 @@ export default class Parser {
             {
                 value: mention,
                 replace: /{author}/
+            },
+            {
+                value: guild.name,
+                replace: /{guild.name}/
+            },
+            {
+                value: guild.memberCount.toString(),
+                replace: /{guild.members}/
+            },
+            {
+                value: config.emotes.check,
+                replace: /{emote}/
             }
         ];
 

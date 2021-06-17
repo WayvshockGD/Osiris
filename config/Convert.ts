@@ -14,6 +14,10 @@ export interface config {
         owners: string[];
         databaseURI: string;
     };
+    emotes: {
+        check: string;
+        deny: string;
+    }
 }
 
 let file = readFileSync("./production.yaml", { encoding: "utf8" });

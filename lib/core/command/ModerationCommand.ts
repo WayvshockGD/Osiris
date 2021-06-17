@@ -12,15 +12,22 @@ export class ModerationCommand extends Command {
         message: Eris.Message,
         member: Eris.Member,
         reason: string,
-        response: string
+        response: string,
+        guild: Eris.Guild
     ) {
         let parser = new Parser(response);
+
+        if (member.id === guild.ownerID) {
+            return message.channel.createMessage(
+                `**You cannot ban the owner** ( ${member.username}#${member.discriminator} )`
+            )
+        }
 
         member.ban(0, reason)
             .then(() => {
 
             message.channel.createMessage(
-                parser.start(message.author.username, member)
+                parser.start(message.author.username, member, guild)
             );
 
         }).catch((err: Eris.DiscordRESTError) => {

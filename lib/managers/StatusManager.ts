@@ -25,11 +25,11 @@ export default class StatusManager {
     private parse(args: string, client: Osiris) {
         let rules = [
             { 
-                value: / {members}/, 
+                value: /{members}/, 
                 replace: client.users.size.toString() 
             },
             {
-                value: / {guilds}/,
+                value: /{guilds}/,
                 replace: client.guilds.size.toString()
             }
         ];

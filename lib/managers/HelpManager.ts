@@ -24,21 +24,7 @@ export class HelpManager {
 
     private argsLength(commands: Map<string, CommandOptions>, modules: Map<string, ModuleOptions>) {
         let core: string[] = [];
-        let info: string[] = [];
-        let mod: string[] = [];
         let moduleList: string[] = [];
-
-        for (let command of commands.values()) {
-            if (command.category === "Core") core.push(
-                `${config.prefix}${command.name} ${command.additions?.usage || ""}`
-            );
-            if (command.category === "Information") info.push(
-                `${config.prefix}${command.name} ${command.additions?.usage || ""}`
-            )
-            if (command.category === "Moderation") mod.push(
-                `${config.prefix}${command.name} ${command.additions?.usage || ""}`
-            )
-        }
 
         for (let module of modules.values()) {
             let commands: string[] = [];
@@ -47,18 +33,19 @@ export class HelpManager {
                     `${config.prefix}${command.name} ${command.additions?.usage || ""}`
                 );
             }
-            moduleList.push(`[ ${module.name} ]\n${commands.join(` ${config.prefix}`)}`);
+            moduleList.push(`[ ${module.name} ]\n${commands.join(` `)}`);
         }
 
-        let content = [
-            core.join(", "),
-            mod.join(", "),
-            info.join(", ")
-        ];
+        for (let command of commands.values()) {
+            if (moduleList.includes(command.name)) return;
+            core.push(
+                `${config.prefix}${command.name} ${command.additions?.usage || ""}`
+            );
+        }
 
         return this.message.channel.createMessage(
             markdown.codeBlock(
-                `${content.join("\n")}\n\n${moduleList.join("\n")}`,
+                `${core.join("\n")}\n\n${moduleList.join("\n")}`,
                  "cs"
             )
         );

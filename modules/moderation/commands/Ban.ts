@@ -10,18 +10,20 @@ export = new ModerationCommand({
     category: "Moderation",
     module: "Moderation",
 
-    execute: ({ message, responses, args, guild }) => {
+    execute: ({ message, responses, args, guild, client }) => {
         let member = resolver.member(args[0], guild);
 
         if (!member) {
             return message.channel.createMessage(`No users known as **${args[0]}**`);
         }
 
+        client.emit("ban", member, args.slice(1).join(" "), guild);
         return ModerationCommand.prototype.ban(
             message, 
             member, 
             args.slice(1).join(" "),
-            `${responses.Ban}`
+            `${responses.Ban}`,
+            guild
         )
     }
 })
