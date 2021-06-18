@@ -64,7 +64,13 @@ export default class Osiris extends Eris.Client {
         this.on("ban", async (m, r, g) => await onBan({ 
             member: m,
             reason: r,
-            guild: g
+            guild: g,
+            client: this
+        }));
+        this.on("kick", async (m, r, g) => await onBan({ 
+            member: m,
+            reason: r,
+            guild: g,
             client: this
         }));
     }

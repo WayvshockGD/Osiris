@@ -22,12 +22,22 @@ export default class CommandHandler {
 
         if (["help", "commands"].includes(args[0])) {
             args = args.slice(1);
-            return new HelpManager(args, message, client.commands, client.modules);
+            return new HelpManager(args, message, client.commands, client.modules, client);
         }
 
         let command = client.commands.get(args[0].toLowerCase());
 
         if (!command) return;
+
+        if (command.permission) {
+            // @ts-ignore
+            if (!message.member?.permissions.json[command.permission]) {
+                return message.channel.createMessage(
+                    `You require of the permission ( ${command.permission} ) to run this!`
+                )
+            }
+        }
+
         let subCommand;
 
         if (args[1]) {

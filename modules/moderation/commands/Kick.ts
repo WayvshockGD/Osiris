@@ -4,8 +4,8 @@ import { Resolver } from "../../../lib/utils/Resolver";
 let resolver = new Resolver();
 
 export = new ModerationCommand({
-    name: "ban",
-    description: "Bans a user from the guild.",
+    name: "kick",
+    description: "Kicks a user from the guild.",
     enabled: true,
     category: "Moderation",
     module: "Moderation",
@@ -18,8 +18,8 @@ export = new ModerationCommand({
             return message.channel.createMessage(`No users known as **${args[0]}**`);
         }
 
-        client.emit("ban", member, args.slice(1).join(" "), guild);
-        return ModerationCommand.prototype.ban(
+        client.emit("kick", member, args.slice(1).join(" "), guild);
+        return ModerationCommand.prototype.kick(
             message, 
             member, 
             args.slice(1).join(" "),

@@ -3,7 +3,7 @@ import { Model } from "mongoose";
 import { DataObject } from "../database/Responses";
 import Osiris from "../Osiris";
 
-type categorys = "Core" | "Information" | "Moderation";
+export type category = "Core" | "Information" | "Moderation" | "Settings";
 
 export interface subCommandBuilder {
     command: subCommandOptions;
@@ -21,8 +21,9 @@ export interface CommandOptions {
     name: string;
     description: string;
     enabled: boolean;
-    category: categorys;
+    category: category;
     module?: string;
+    permission?: string;
     subCommands?: subCommandBuilder[];
     additions?: {
         usage?: string;

@@ -1,4 +1,5 @@
 import Eris from "eris";
+import Osiris from "../../../Osiris";
 import ModLog from "../../../database/ModLog";
 import modLogger from "../../../utils/ModLogger";
 
@@ -6,7 +7,7 @@ interface Ban {
     member: Eris.Member;
     reason: string;
     guild: Eris.Guild;
-    client: Eris.Client;
+    client: Osiris;
 }
 
 export = async function({ member, reason, guild, client }: Ban) {
@@ -14,5 +15,9 @@ export = async function({ member, reason, guild, client }: Ban) {
 
     if (!data) return;
 
-    client.createMessage(data.Channel, modLogger(reason));
+    client.createMessage(data.Channel, modLogger(reason)).catch((err) => {
+        return client.logger.warn(
+            `Cannot send message to channel ( ${data.channel} ), reason:`, err
+        );
+    })
 }

@@ -36,4 +36,33 @@ export class ModerationCommand extends Command {
                 );
         })
     }
+
+    public kick(
+        message: Eris.Message,
+        member: Eris.Member,
+        reason: string,
+        response: string,
+        guild: Eris.Guild
+    ) {
+        let parser = new Parser(response);
+
+        if (member.id === guild.ownerID) {
+            return message.channel.createMessage(
+                `**You cannot kick the owner** ( ${member.username}#${member.discriminator} )`
+            )
+        }
+
+        member.kick(reason)
+            .then(() => {
+
+            message.channel.createMessage(
+                parser.start(message.author.username, member, guild)
+            );
+
+        }).catch((err: Eris.DiscordRESTError) => {
+                return message.channel.createMessage(
+                    `Cannot kick **${member.username}**: ${err.message}`
+                );
+        })
+    }
 }

@@ -11,6 +11,7 @@ export interface config {
         Unmute: string;
     }
     botConfig: {
+        name: string;
         owners: string[];
         databaseURI: string;
     };
