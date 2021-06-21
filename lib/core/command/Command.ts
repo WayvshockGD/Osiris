@@ -14,6 +14,8 @@ export class Command {
 
     public subCommands?: subCommandBuilder[];
 
+    public permission?: string;
+
     public additions: CommandOptions["additions"];
 
     constructor(opts: CommandOptions) {
@@ -29,6 +31,8 @@ export class Command {
         this.additions = opts.additions;
 
         this.subCommands = opts.subCommands;
+
+        this.permission = opts.permission;
 
         this.execute = opts.execute;
     }

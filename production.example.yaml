@@ -1,5 +1,15 @@
-token: "{{token}}"
-prefix: "{{prefix}}"
+token: ""
+prefix: ""
+defaultResponses:
+  Ban: "{mention} just got banned by {author}"
+  Kick: "{mention} got kicked by {author}"
+  Mute: "Successfully muted {mention} by {author}"
+  Unmute: "Successfully unmuted {mention} by {author}"
 botConfig:
+  name: ""
+  databaseURI: ""
   owners:
-    - "{{ID}}" 
+    - ""
+emotes:
+  check: "✅"
+  deny: "❌"

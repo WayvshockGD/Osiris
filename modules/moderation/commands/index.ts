@@ -1,4 +1,5 @@
 export = [
     require("./Responses"),
-    require("./Ban")
+    require("./Ban"),
+    require("./Kick")
 ]

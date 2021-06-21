@@ -1,9 +1,8 @@
 import Eris from "eris";
-import { Model } from "mongoose";
 import { DataObject } from "../database/Responses";
 import Osiris from "../Osiris";
 
-export type category = "Core" | "Information" | "Moderation" | "Settings";
+export type category = "Core" | "Information" | "Moderation" | "Settings" | "Manager";
 
 export interface subCommandBuilder {
     command: subCommandOptions;

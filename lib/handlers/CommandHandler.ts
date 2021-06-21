@@ -31,9 +31,9 @@ export default class CommandHandler {
 
         if (command.permission) {
             // @ts-ignore
-            if (!message.member?.permissions.json[command.permission]) {
+            if (!message.member?.permissions.has(command?.permission)) {
                 return message.channel.createMessage(
-                    `You require of the permission ( ${command.permission} ) to run this!`
+                    `You need the permission ( \`${command.permission}\` ) to run this!`
                 )
             }
         }

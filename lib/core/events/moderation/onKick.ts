@@ -15,7 +15,7 @@ export = async function({ member, reason, guild, client }: Ban) {
 
     if (!data) return;
 
-    client.createMessage(data.Channel, modLogger(reason, member, "banned")).catch((err) => {
+    client.createMessage(data.Channel, modLogger(reason, member, "kicked")).catch((err) => {
         return client.logger.warn(
             `Cannot send message to channel ( ${data.channel} ), reason:`, err
         );

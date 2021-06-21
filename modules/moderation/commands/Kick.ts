@@ -9,9 +9,11 @@ export = new ModerationCommand({
     enabled: true,
     category: "Moderation",
     module: "Moderation",
-    permission: "banMembers",
+    permission: "kickMembers",
 
     execute: ({ message, responses, args, guild, client }) => {
+        if (!args[0]) return message.channel.createMessage("Mention someone to kick!");
+        
         let member = resolver.member(args[0], guild);
 
         if (!member) {
@@ -23,7 +25,7 @@ export = new ModerationCommand({
             message, 
             member, 
             args.slice(1).join(" "),
-            `${responses.Ban}`,
+            `${responses.Kick}`,
             guild
         )
     }

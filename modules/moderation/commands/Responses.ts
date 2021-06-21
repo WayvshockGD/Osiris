@@ -17,7 +17,7 @@ let set = new SubCommand({
             (err, data) => {
 
         if (!args[0]) return message.channel.createMessage(
-                     `Pick a response! \`${responses.join(", ")}\``
+                `Pick a response! \`${responses.join(", ")}\``
             );
 
         if (!responses.includes(args[0])) {

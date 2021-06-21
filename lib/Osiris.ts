@@ -8,6 +8,7 @@ import StatusManager from "./managers/StatusManager";
 import Logger from "./utils/Logger";
 
 import onBan from "./core/events/moderation/onBan";
+import onKick from "./core/events/moderation/onKick";
 
 let convert = Config();
 
@@ -67,7 +68,7 @@ export default class Osiris extends Eris.Client {
             guild: g,
             client: this
         }));
-        this.on("kick", async (m, r, g) => await onBan({ 
+        this.on("kick", async (m, r, g) => await onKick({ 
             member: m,
             reason: r,
             guild: g,

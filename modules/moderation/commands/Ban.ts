@@ -12,6 +12,8 @@ export = new ModerationCommand({
     permission: "banMembers",
 
     execute: ({ message, responses, args, guild, client }) => {
+        if(!args[0]) return message.channel.createMessage("Mention someone to ban!");
+
         let member = resolver.member(args[0], guild);
 
         if (!member) {

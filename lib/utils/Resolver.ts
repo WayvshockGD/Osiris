@@ -8,6 +8,11 @@ export class Resolver {
                false;
     }
 
+    channel(args: string, guild: Eris.Guild) {
+        return guild.channels.find((c) => c.id === this.clean(args)) ||
+               guild.channels.find((c) => c.name === args);
+    }
+
     private clean(arg: string) {
         return arg.replace("<", "")
                   .replace(">", "")

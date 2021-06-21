@@ -7,6 +7,7 @@ export interface DataObject {
     Kick?: string;
     Mute?: string;
     Unmute?: string;
+    save(): Promise<void>;
 }
 
 let data = new Schema({
