@@ -72,18 +72,20 @@ let edit = new SubCommand({
     description: "Edits a guild tag.",
 
     execute: async ({ message, args, guild }) => {
+        if (!message.member?.permissions.has("manageMessages")) return;
         let [arg, ...body] = args;
 
         if (!arg) return message.channel.createMessage("Say a tag name!");
 
-        let data = await TagData.findOne({ 
+        await TagData.findOne({ 
             Guild: guild.id, 
-            Name: args[0]
+            Name: arg
          }, undefined, undefined, (err, data) => {
              if (!data) return message.channel.createMessage("No data found for this tag.");
              if (!body.length) return message.channel.createMessage("Say a new tag body for this tag.");
 
-             data.Name = body.join(" ");
+             data.Body = body.join(" ");
+             message.channel.createMessage(`Edited tag \`( ${arg} )\``)
              return data.save();
          });
     }
