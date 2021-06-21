@@ -65,6 +65,7 @@ export = new ModerationCommand({
             globalDisabled: false
         }
     ],
+    permission: "manageGuild",
     
     
     execute: async function({ message, guild, client }) {

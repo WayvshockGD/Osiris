@@ -77,7 +77,11 @@ export default class Osiris extends Eris.Client {
     }
 
     public onStartUp() { 
-           this.logger.info("Started up on client", this.user.username);
+           this.logger.info(
+               "Started up on client", 
+               this.user.username, 
+               `with ${this.commands.size} commands`
+            );
            
            new StatusManager({
                client: this,

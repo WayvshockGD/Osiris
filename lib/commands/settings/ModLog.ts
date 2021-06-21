@@ -37,6 +37,7 @@ export = new Command({
             globalDisabled: false
         }
     ],
+    permission: "manageChannels",
 
     execute: async ({ message, args, guild }) => {
         await ModLog.findOne({ Guild: guild.id },

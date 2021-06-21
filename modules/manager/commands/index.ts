@@ -1,1 +1,4 @@
-export = []
+export = [
+    require("./Purge"),
+    require("./Tag")
+]
